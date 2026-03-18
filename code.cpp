@@ -33,8 +33,7 @@ public:
     bool operator !=(const Int &rhs)const {
         return data != rhs.data;
     }
-    // 添加 val() 方法用于调试输出
-    int val() const { return data; }
+
 };
 
 class DynamicType {
@@ -88,15 +87,9 @@ bool isEqual(std::deque<Int> &a, sjtu::deque<Int> &b) {
     resultB.clear();
     for (auto x : a) resultA.push_back(x);
     for (auto x : b) resultB.push_back(x);
-    if (resultA.size() != resultB.size()) {
-        std::cerr << "Size mismatch: a.size()=" << resultA.size() << " b.size()=" << resultB.size() << std::endl;
-        return false;
-    }
+    if (resultA.size() != resultB.size()) return false;
     for (int i = 0; i < (int)resultA.size(); i++) {
-        if (resultA[i] != resultB[i]) {
-            std::cerr << "Element mismatch at index " << i << ": a=" << resultA[i].val() << " b=" << resultB[i].val() << std::endl;
-            return false;
-        }
+        if (resultA[i] != resultB[i]) return false;
     }
     return true;
 }
@@ -1049,7 +1042,7 @@ std::pair<bool, double> synthesisChecker() {
 
     auto citA = cA.cbegin();
     auto citB = cB.cbegin();
-    for (; citA != cA.end(); citA++, citB++) {
+    for (; citA != cA.end(); citA++, citB) {
         if (*citA != *citB) {
             return std::make_pair(false, 0);
         }
